@@ -35,14 +35,25 @@ Usage
 =================
 
 `usage: ./estim {-h} {-v} {-k} {-r} -a CHANNEL_A_INTENSITY -b CHANNEL_B_INTENSITY -f FEELING_LEVEL -d DUTY_CYCLE -m MODE -p POWER -j JOINED`
+
  `-h Print this help message`
+
  `-v Debug logging`
+
  `-k Kill Channel A and B output.`
+
  `-r Reset E-Stim to default startup settings.`
+
  `-a CHANNEL_A_INTENSITY Set channel A intensity (values: 0 - 100)`
+
  `-b CHANNEL_B_INTENSITY Set channel B intensity (values: 0 - 100)`
+
  `-f FEELING_LEVEL       Set feeling level (values: 2 - 100)`
+
  `-d DUTY_CYCLE          Set duty cycle (values: 2 - 100)`
+
  `-m MODE                Set Mode`
+
  `-p POWER               Set Power (values: 0 or 1)`
+
  `-j JOINED              Set Joined (values: 0 or 1)`
