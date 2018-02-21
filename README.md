@@ -21,6 +21,10 @@ Master [git repository](https://github.com/AlexRope/linux_e-stim_2b_cli):
 
    `git clone https://github.com/AlexRope/linux_e-stim_2b_cli.git`
 
+Tested E-STIM 2B Firmware Versions
+--------
+E-STIM 2B v2.105
+
 Build From Source
 =================
 
