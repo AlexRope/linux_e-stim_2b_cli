@@ -242,8 +242,8 @@ void set_power(power_t power) {
 
 void set_joined(joined_t joined) {
 	switch(joined) {
-	case CHANNELS_UNLINKED: writeOut("U\r", 2); break;
-	case CHANNELS_LINKED: writeOut("J\r", 2); break;
+	case CHANNELS_UNLINKED: writeOut("J0\r", 3); break;
+	case CHANNELS_LINKED: writeOut("J1\r", 3); break;
 	}
 }
 
@@ -272,11 +272,12 @@ void get_status(int echo) {
 }
 
 void print_help(char filename[]){
-	printf("usage: %s {-h} {-v} {-k} {-r} -a CHANNEL_A_INTENSITY -b CHANNEL_B_INTENSITY -f FEELING_LEVEL -d DUTY_CYCLE -m MODE -p POWER -j JOINED\n", filename);
-	printf(" -h	Print this help message\n");
-	printf(" -v	Debug logging\n");
-	printf(" -k	Kill Channel A and B output.\n");
-	printf(" -r	Reset E-Stim to default startup settings.\n");
+	printf("usage: %s {-h} {-v} {-k} {-r} -i DEVICE -a CHANNEL_A_INTENSITY -b CHANNEL_B_INTENSITY -f FEELING_LEVEL -d DUTY_CYCLE -m MODE -p POWER -j JOINED\n", filename);
+	printf(" -i DEVICE      Serial tty port that your E-STIM 2B is connected. (e.g. /dev/ttyUSB0)");
+	printf(" -h             Print this help message\n");
+	printf(" -v             Debug logging\n");
+	printf(" -k             Kill Channel A and B output.\n");
+	printf(" -r             Reset E-Stim to default startup settings.\n");
 	printf(" -a CHANNEL_A_INTENSITY Set channel A intensity (values: 0 - 100)\n");
 	printf(" -b CHANNEL_B_INTENSITY Set channel B intensity (values: 0 - 100)\n");
 	printf(" -f FEELING_LEVEL	Set feeling level (values: 2 - 100)\n");
@@ -296,9 +297,10 @@ int main(int argc, char * argv[]) {
 	emode_t mode=-1;
 	power_t power=-1;
 	joined_t joined=-1;
+	char* device;
 	
 	int opt;
-	while ((opt = getopt (argc, argv, "hvkra:b:d:f:m:p:j:")) != -1) {
+	while ((opt = getopt (argc, argv, "hvkra:b:d:f:m:p:j:i:")) != -1) {
 		switch(opt) {
 		case 'v': DEBUG=1; break;
 		case 'k': kill=1; break;
@@ -310,12 +312,13 @@ int main(int argc, char * argv[]) {
 		case 'f': feeling=atoi(optarg); break;
 		case 'm': mode=atoi(optarg); break;
 		case 'p': power=atoi(optarg); break;
-		case 'j': joined=atoi(optarg); break;			
+		case 'j': joined=atoi(optarg); break;
+		case 'i': device=optarg; break;
 		}
 	}
 
 	//Needs to be refactored to take device as user input or automatically detect.
-	if ((fd = setup_serial("/dev/ttyUSB0")) < 0) {
+	if ((fd = setup_serial(device)) < 0) {
 		return 1;
 	}
 	
